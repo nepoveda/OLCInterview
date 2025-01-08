@@ -1,6 +1,6 @@
-from snakes_and_ladders.board import Board
-from snakes_and_ladders.player import Player
-from snakes_and_ladders.utils import roll_dice
+from board import Board
+from player import Player
+from utils import roll_dice
 
 
 class Game:

@@ -1,5 +1,5 @@
 from board import Board
-from snakes_and_ladders.game import Game
+from game import Game
 from utils import SNAKES, LADDERS
 
 if __name__ == "__main__":
