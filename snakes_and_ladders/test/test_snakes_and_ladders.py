@@ -1,7 +1,7 @@
 import unittest
-from snakes_and_ladders.board import Board
-from snakes_and_ladders.player import Player
-from snakes_and_ladders.game import Game
+from ..board import Board
+from ..player import Player
+from ..game import Game
 
 
 class TestBoard(unittest.TestCase):

@@ -1,6 +1,6 @@
-from board import Board
-from game import Game
-from utils import SNAKES, LADDERS
+from snakes_and_ladders.board import Board
+from snakes_and_ladders.game import Game
+from snakes_and_ladders.utils import SNAKES, LADDERS
 
 if __name__ == "__main__":
     num_players: int = int(input("Zadejte počet hráčů: "))
