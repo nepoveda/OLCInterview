@@ -5,17 +5,10 @@ if typing.TYPE_CHECKING:
 
 
 class Player:
-    def __init__(self, name: str, current_game: "Game"):
-        """
-        Initializes a Player with a given name and starting position.
-
-        Args:
-            name (str): The name of the player.
-            current_game (Game): The game instance to access other players.
-        """
+    def __init__(self, name: str, game: "Game"):
         self.name: str = name
-        self.position: int = 0
-        self.game: "Game" = current_game
+        self.position: int = 1
+        self.game: "Game" = game
 
     def move(self, steps: int) -> None:
         """
@@ -24,12 +17,14 @@ class Player:
         Args:
             steps (int): The number of steps to move the player.
         """
-        self.position += steps
-        self.position = self.game.board.get_new_position(self.position)
-        print(f"{self.name} se posunul na pole {self.position}")
+        if self.position + steps <= 100:
+            self.position += steps
+            self.position = self.game.board.get_new_position(self.position)
+            print(f"{self.name} se posunul na pole {self.position}")
 
-        # Check if the new position is occupied by another player
-        for player in self.game.players:
-            if player != self and player.position == self.position:
-                player.move(-1)  # Move the other player back by one position
-                print(f"{player.name} byl posunut zpět na pole {player.position}")
+            # Check if the new position is occupied by another player
+            for player in self.game.players:
+                if player != self and player.position == self.position:
+                    player.move(-1)  # Move the other player back by one position
+        else:
+            print(f"{self.name} nemůže překročit pole 100")

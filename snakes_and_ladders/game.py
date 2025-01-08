@@ -1,17 +1,17 @@
-from board import Board
-from player import Player
+from snakes_and_ladders.board import Board
+from snakes_and_ladders.player import Player
 from snakes_and_ladders.utils import roll_dice
 
 
 class Game:
-    def __init__(self, num_players: int):
+    def __init__(self, num_players: int, board: Board) -> None:
         """
         Initializes the Game with the specified number of players.
 
         Args:
             num_players (int): The number of players in the game.
         """
-        self.board: Board = Board()
+        self.board = board
         self.players: list[Player] = [
             Player(f"Hráč {i+1}", self) for i in range(num_players)
         ]
@@ -35,3 +35,4 @@ class Game:
             self.current_player_index = (self.current_player_index + 1) % len(
                 self.players
             )
+            print()
