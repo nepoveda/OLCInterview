@@ -1,17 +1,6 @@
 import unittest
 
-from OOP.html_elements import (
-    HTMLElement,
-    Div,
-    Anchor,
-    Input,
-    Option,
-    OptGroup,
-    Label,
-    Select,
-    Image,
-    Form,
-)
+from OOP.html_elements import *
 
 
 class TestHTMLElement(unittest.TestCase):
