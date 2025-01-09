@@ -46,9 +46,11 @@ class HTMLElement:
             self.attributes = {"id": self.id, **self.attributes}
         attrs = " ".join(f'{key}="{value}"' for key, value in self.attributes.items())
         children_str = " ".join(str(child) for child in self.children)
-        return (
-            f"<{self.tag} {attrs}>\r\n{self.content}\r\n{children_str}\r\n</{self.tag}>"
-        )
+        output_string = f"<{self.tag} {attrs}>"
+        output_string += f"\r\n{self.content}\r\n" if self.content else ""
+        output_string += f"\r\n{children_str}" if children_str else ""
+        output_string += f"</{self.tag}>\r\n"
+        return output_string
 
     def add_children(self, child: HTMLElement):
         """

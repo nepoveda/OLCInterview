@@ -19,7 +19,7 @@ class TestHTMLElement(unittest.TestCase):
             "div", id="main", attributes={"class": "container"}, content="Hello"
         )
         self.assertEqual(
-            str(element), '<div id="main" class="container">\r\nHello\r\n\r\n</div>'
+            str(element), '<div id="main" class="container">\r\nHello\r\n</div>\r\n'
         )
 
     def test_add_unique_child(self):
@@ -86,9 +86,11 @@ class TestHTMLElement(unittest.TestCase):
         self.assertIn(option2, select.children)
 
     def test_image_initialization(self):
-        image = Image(src="image.png", alt="An image")
+        image = Image(src="static/image.png", alt="An image")
         self.assertEqual(image.tag, "img")
-        self.assertEqual(image.attributes, {"src": "image.png", "alt": "An image"})
+        self.assertEqual(
+            image.attributes, {"src": "static/image.png", "alt": "An image"}
+        )
 
     def test_form_initialization(self):
         form = Form(action="/submit", method="post")
