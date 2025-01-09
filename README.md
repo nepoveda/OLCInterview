@@ -16,7 +16,7 @@ the end of the board wins the game.
 ### Running the game
 
 ```bash
-  python snakes_and_ladders/main.py
+  python snakes_and_ladders/run.py
 ```
 
 ### Running the tests
