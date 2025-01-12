@@ -31,4 +31,8 @@ In this part of task i created Object representation of HTML elements. Run `pyth
 `oop/index.html` file. You can open it in your browser or do `cd oop && python -m http.server` and open
 `http://localhost:8000/` in your browser.
 
+## Database
+
+I selected postgresql for these tasks. Each of the task is in separate file.
+
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
