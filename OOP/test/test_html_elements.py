@@ -5,8 +5,11 @@ from OOP.html_elements import *
 
 class TestHTMLElement(unittest.TestCase):
     def test_element_initialization(self):
-        element = HTMLElement(
-            "div", id="main", attributes={"class": "container"}, content="Hello"
+        element = HTMLPairElement(
+            "div",
+            identificator="main",
+            attributes={"class": "container"},
+            content="Hello",
         )
         self.assertEqual(element.tag, "div")
         self.assertEqual(element.id, "main")
@@ -15,23 +18,26 @@ class TestHTMLElement(unittest.TestCase):
         self.assertEqual(element.children, [])
 
     def test_element_string_representation(self):
-        element = HTMLElement(
-            "div", id="main", attributes={"class": "container"}, content="Hello"
+        element = HTMLPairElement(
+            "div",
+            identificator="main",
+            attributes={"class": "container"},
+            content="Hello",
         )
         self.assertEqual(
             str(element), '<div id="main" class="container">\r\nHello\r\n</div>\r\n'
         )
 
     def test_add_unique_child(self):
-        parent = HTMLElement("div")
-        child = HTMLElement("span")
+        parent = HTMLPairElement("div")
+        child = HTMLPairElement("span")
         parent.add_children(child)
         self.assertIn(child, parent.children)
         self.assertEqual(len(parent.children), 1)
 
     def test_add_duplicate_child(self):
-        parent = HTMLElement("div")
-        child = HTMLElement("span")
+        parent = HTMLPairElement("div")
+        child = HTMLPairElement("span")
         parent.add_children(child)
         parent.add_children(child)
         self.assertEqual(len(parent.children), 1)

@@ -2,6 +2,15 @@ from __future__ import annotations
 
 
 class HTMLElement:
+    def __init__(
+        self, tag: str, identificator: str = "", attributes: dict[str, str] = None
+    ):
+        self.tag: str = tag
+        self.id: str = identificator
+        self.attributes: dict[str, str] = attributes or {}
+
+
+class HTMLPairElement(HTMLElement):
     """
     Represents an HTML element.
 
@@ -10,30 +19,30 @@ class HTMLElement:
         id (str, optional): The id attribute of the HTML element.
         attributes (dict[str, str]): A dictionary of other attributes for the HTML element.
         content (str): The inner content of the HTML element.
-        children (list[HTMLElement]): A list of child HTML elements.
+        children (list[HTMLPairElement]): A list of child HTML elements.
     """
 
     def __init__(
         self,
         tag: str,
-        id: str = None,
+        identificator: str = None,
         attributes: dict[str, str] = None,
         content: str = "",
+        children: list[HTMLElement] = None,
     ):
         """
         Initializes an HTMLElement instance.
 
         Args:
             tag (str): The tag name of the HTML element.
-            id (str, optional): The id attribute of the HTML element. Defaults to None.
+            identificator (str, optional): The id attribute of the HTML element. Defaults to None.
             attributes (dict[str, str], optional): A dictionary of other attributes for the HTML element. Defaults to None.
             content (str, optional): The inner content of the HTML element. Defaults to "".
         """
-        self.tag: str = tag
-        self.attributes: dict[str, str] = attributes or {}
+        super().__init__(tag, identificator, attributes)
         self.content: str = content
-        self.children: list[HTMLElement] = []
-        self.id: str = id
+        self.children: list[HTMLElement] = children or []
+        self.id: str = identificator
 
     def __str__(self):
         """
@@ -52,20 +61,53 @@ class HTMLElement:
         output_string += f"</{self.tag}>\r\n"
         return output_string
 
-    def add_children(self, child: HTMLElement):
+    def add_children(
+        self, child: HTMLPairElement | HTMLSingleElement
+    ) -> HTMLPairElement:
         """
         Adds a child element to the HTML element if it is not already present.
 
         Args:
-            child (HTMLElement): The child element to add.
+            child (HTMLPairElement): The child element to add.
 
         Returns:
-            HTMLElement: The current instance of HTMLElement.
+            HTMLPairElement: The current instance of HTMLElement.
         """
         return self.children.append(child) if child not in self.children else self
 
 
-class Div(HTMLElement):
+class HTMLSingleElement(HTMLElement):
+    """
+    Represents an HTML element.
+    """
+
+    def __init__(
+        self, tag: str, idenificator: str = "", attributes: dict[str, str] = None
+    ):
+        """
+        Initializes an HTMLElement instance.
+
+        Args:
+            tag (str): The tag name of the HTML element.
+            idenificator (str, optional): The id attribute of the HTML element. Defaults to None.
+            attributes (dict[str, str], optional): A dictionary of other attributes for the HTML element. Defaults to None.
+        """
+        super().__init__(tag, idenificator, attributes)
+
+    def __str__(self):
+        """
+        Returns the string representation of the HTML element.
+
+        Returns:
+            str: The string representation of the HTML element.
+        """
+        if self.id:
+            self.attributes = {"id": self.id, **self.attributes}
+        attrs = " ".join(f'{key}="{value}"' for key, value in self.attributes.items())
+        return f"<{self.tag} {attrs} />\r\n"
+
+
+class Div(HTMLPairElement):
     """
     Represents a <div> HTML element.
     """
@@ -81,7 +123,7 @@ class Div(HTMLElement):
         super().__init__("div", attributes=attributes, content=content)
 
 
-class Anchor(HTMLElement):
+class Anchor(HTMLPairElement):
     """
     Represents an <a> HTML element.
     """
@@ -99,7 +141,7 @@ class Anchor(HTMLElement):
         super().__init__("a", attributes=attributes, content=content)
 
 
-class Input(HTMLElement):
+class Input(HTMLSingleElement):
     """
     Represents an <input> HTML element.
     """
@@ -121,11 +163,10 @@ class Input(HTMLElement):
             attributes (dict[str, str], optional): A dictionary of other attributes for the input element. Defaults to None.
         """
         attributes = {"type": type, "name": name, "value": value, **(attributes or {})}
-        self.children = []
         super().__init__("input", attributes=attributes)
 
 
-class Option(HTMLElement):
+class Option(HTMLPairElement):
     """
     Represents an <option> HTML element.
     """
@@ -140,9 +181,10 @@ class Option(HTMLElement):
         """
         attributes = {"value": value, **(attributes or {})}
         super().__init__("option", attributes=attributes)
+        self.content = value
 
 
-class OptGroup(HTMLElement):
+class OptGroup(HTMLPairElement):
     """
     Represents an <optgroup> HTML element.
     """
@@ -166,7 +208,7 @@ class OptGroup(HTMLElement):
         self.children = options or []
 
 
-class Label(HTMLElement):
+class Label(HTMLPairElement):
     """
     Represents a <label> HTML element.
     """
@@ -184,7 +226,7 @@ class Label(HTMLElement):
         super().__init__("label", attributes=attributes, content=content)
 
 
-class Select(HTMLElement):
+class Select(HTMLPairElement):
     """
     Represents a <select> HTML element.
     """
@@ -210,7 +252,7 @@ class Select(HTMLElement):
         self.children = options or []
 
 
-class Image(HTMLElement):
+class Image(HTMLSingleElement):
     """
     Represents an <img> HTML element.
     """
@@ -228,7 +270,7 @@ class Image(HTMLElement):
         super().__init__("img", attributes=attributes)
 
 
-class Form(HTMLElement):
+class Form(HTMLPairElement):
     """
     Represents a <form> HTML element.
     """
@@ -249,3 +291,15 @@ class Form(HTMLElement):
         """
         attributes = {"action": action, "method": method, **(attributes or {})}
         super().__init__("form", attributes=attributes)
+
+
+class BreakLine(HTMLSingleElement):
+    """
+    Represents a <br> HTML element.
+    """
+
+    def __init__(self):
+        """
+        Initializes a BreakLien instance.
+        """
+        super().__init__("br")
