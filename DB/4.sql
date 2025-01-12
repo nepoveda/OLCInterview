@@ -2,7 +2,7 @@ SELECT
     e.first_name,
     e.last_name,
     s.store_id,
-    EXTRACT(YEAR FROM r.rental_date) AS year,
+    DATE_PART('year', r.rental_date) AS year,
     COUNT(r.rental_id) AS rental_count
 FROM
     rental r
@@ -14,7 +14,7 @@ GROUP BY
     e.first_name,
     e.last_name,
     s.store_id,
-    EXTRACT(YEAR FROM r.rental_date)
+    DATE_PART('year', r.rental_date)
 ORDER BY
     e.last_name,
     e.first_name,
