@@ -7,6 +7,12 @@ So add project to your `PYTHONPATH`
   export PYTHONPATH=$PYTHONPATH:/path/to/olc-interview-tasks
 ```
 
+### Running the tests
+
+```bash
+  python -m unittest -b
+```
+
 ## Snakes and Ladders
 
 This is a simple implementation of the game Snakes and Ladders. For interview purposes, I have implemented the game in
@@ -19,10 +25,10 @@ the end of the board wins the game.
   python snakes_and_ladders/run.py
 ```
 
-### Running the tests
+## OOP
 
-```bash
-  python -m unittest -b
-```
+In this part of task i created Object representation of HTML elements. Run `python oop/run.py`, and It makes
+`oop/index.html` file. You can open it in your browser or do `cd oop && python -m http.server` and open
+`http://localhost:8000/` in your browser.
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
